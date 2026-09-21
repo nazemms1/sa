@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { RegionalGateways } from "@/components/gateways";
 import { ChinaHolidays } from "@/components/china-holidays";
 import { TrackingTool } from "@/components/tracking-tool";
 import { Services } from "@/components/services";
@@ -43,19 +44,22 @@ export default function Home() {
           onSearchTracking={handleSearchTracking}
         />
 
+        {/* Key Regional Gateways (Latakia, Beirut & Aqaba Ports) */}
+        <RegionalGateways />
+
         {/* China Official Holidays Announcement Card (Matching uploaded poster) */}
         <ChinaHolidays />
 
         {/* Interactive Live Cargo Tracking Simulator */}
         <TrackingTool initialCode={activeTrackingCode} />
 
-        {/* Services Grid */}
+        {/* Services Grid (Air & Sea FCL/LCL, Transit, Customs, Project Cargo) */}
         <Services onOpenQuoteModal={handleOpenQuote} />
 
         {/* Freight Cost Estimator & Rate Calculator */}
         <ShippingCalculator onOpenQuoteModal={handleOpenQuote} />
 
-        {/* 5-Step Route Process Journey */}
+        {/* 5 Operational Pillars Process Journey */}
         <RouteProcess />
 
         {/* Corporate Strengths & Syria Logistics Experience */}

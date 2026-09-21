@@ -76,6 +76,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
               {content.hero.subtitle}
             </p>
 
+            {/* Company Statement Box */}
+            <div className="p-4 rounded-2xl bg-white border-l-4 border-[#c5a059] shadow-md border-y border-r border-slate-200 text-xs sm:text-sm text-slate-700 font-semibold leading-relaxed">
+              {content.hero.companyStatement}
+            </div>
+
             {/* Hero Quick Action Input Bar */}
             <div className="pt-2">
               <form
@@ -125,15 +130,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
             <div className="pt-4 grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-slate-200/90">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>{content.hero.highlights.weeklySailings}</span>
+                <span>{content.hero.highlights.airSeaFclLcl}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>{content.hero.highlights.chinaWarehouses}</span>
+                <span>{content.hero.highlights.regionalExpertise}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>{content.hero.highlights.syrianClearance}</span>
+                <span>{content.hero.highlights.finalDelivery}</span>
               </div>
             </div>
 
@@ -157,7 +162,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
                   </span>
                 </div>
                 <span className="px-3.5 py-1 text-[11px] font-black rounded-full bg-amber-100 text-amber-950 border border-amber-300">
-                  CHINA 🇨🇳 ➡ SYRIA 🇸🇾
+                  GLOBAL 🌍 ➡ SYRIA 🇸🇾
                 </span>
               </div>
 
@@ -205,7 +210,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
                   {/* Origin */}
                   <div className="text-center z-10">
                     <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
-                      🇨🇳
+                      🌍
                     </div>
                     <div className="text-xs font-bold text-white">{content.hero.routeCard.originHub}</div>
                     <div className="text-[10px] text-slate-300">{content.hero.routeCard.saHubsLabel}</div>

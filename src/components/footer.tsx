@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: China Offices */}
+          {/* Column 2: China & Global Hubs */}
           <div className="space-y-4">
             <h4 className="text-sm font-black text-amber-400 uppercase tracking-wider">
               {cont.chinaTitle} 🇨🇳
@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 3: Syria Offices */}
+          {/* Column 3: Syria Main Office */}
           <div className="space-y-4">
             <h4 className="text-sm font-black text-amber-400 uppercase tracking-wider">
               {cont.syriaTitle} 🇸🇾
@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
             <div className="space-y-3 text-xs sm:text-sm text-slate-300 font-normal">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4.5 h-4.5 text-amber-400 flex-shrink-0 mt-0.5" />
-                <span>{cont.damascusAddress}</span>
+                <span className="font-semibold">{cont.officialAddress}</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4.5 h-4.5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -79,22 +79,22 @@ export const Footer: React.FC = () => {
           {/* Column 4: Quick Contact */}
           <div className="space-y-4">
             <h4 className="text-sm font-black text-amber-400 uppercase tracking-wider">
-              التواصل المباشر والاستعلامات
+              {cont.phoneLabel}
             </h4>
 
             <div className="space-y-3 text-xs sm:text-sm text-slate-300 font-bold">
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4.5 h-4.5 text-amber-400" />
-                <span dir="ltr">{content.header.contactPhone}</span>
+                <span dir="ltr">{cont.officialPhone}</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4.5 h-4.5 text-amber-400" />
-                <span>info@salogistics-sy.com</span>
+                <span>{cont.officialEmail}</span>
               </div>
             </div>
 
             <a
-              href="https://wa.me/963944000000"
+              href="https://wa.me/963966642574"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-colors shadow-lg mt-3"
@@ -114,7 +114,7 @@ export const Footer: React.FC = () => {
             onClick={scrollToTop}
             className="p-3 rounded-xl bg-slate-800 hover:bg-[#0f2a4a] text-amber-400 border border-slate-700 transition-colors flex items-center gap-2 font-bold shadow-md"
           >
-            <span>العودة للأعلى</span>
+            <span>{foot.backToTop}</span>
             <ArrowUp className="w-4 h-4" />
           </button>
         </div>
