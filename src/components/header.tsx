@@ -36,9 +36,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
   const navLinks = [
     { href: "#home", label: content.header.nav.home },
     { href: "#holidays", label: content.header.nav.holidays, badge: "2026" },
+    { href: "#gateways", label: content.header.nav.gateways },
     { href: "#tracking", label: content.header.nav.tracking },
     { href: "#services", label: content.header.nav.services },
-    { href: "#calculator", label: "حاسبة الأسعار / Estimator" },
+    { href: "#calculator", label: content.header.nav.calculator },
     { href: "#process", label: content.header.nav.process },
     { href: "#whyus", label: content.header.nav.whyUs },
     { href: "#faq", label: content.header.nav.faq },
@@ -65,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
             </a>
             <span className="text-slate-600">|</span>
             <a
-              href="https://wa.me/963944000000"
+              href="https://wa.me/963966642574"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1.5 text-emerald-300 font-bold hover:text-white transition-colors bg-emerald-950/70 px-3 py-0.5 rounded-full border border-emerald-500/40"
@@ -107,12 +108,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden xl:flex items-center gap-7">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8">
             {navLinks.map((link, idx) => (
               <a
                 key={idx}
                 href={link.href}
-                className="text-xs font-bold text-slate-700 hover:text-[#0f2a4a] transition-colors relative py-1 group"
+                className="text-xs font-extrabold text-slate-700 hover:text-[#0f2a4a] transition-colors relative py-1 group whitespace-nowrap"
               >
                 <span>{link.label}</span>
                 {link.badge && (
@@ -138,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
             </button>
 
             {/* Request Quote Button */}
-            <button onClick={onOpenQuoteModal} className="gold-button px-6 py-2.5 rounded-xl text-xs flex items-center gap-2">
+            <button onClick={onOpenQuoteModal} className="gold-button px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
               <span>{content.header.quoteBtn}</span>
               {isRtl ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
             </button>

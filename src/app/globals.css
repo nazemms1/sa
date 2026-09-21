@@ -43,17 +43,31 @@ body {
 /* Expansive Full-Width Container Utility */
 .layout-container {
   width: 100%;
-  max-width: 1536px; /* 2XL Ultra-wide layout */
+  max-width: 1750px; /* 2XL Ultra-wide layout */
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .layout-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .layout-container {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .layout-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }
 
