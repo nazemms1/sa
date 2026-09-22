@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* Ensure dark variant never matches prefers-color-scheme: dark */
+@custom-variant dark (&:where(.never-dark));
+
 :root {
+  color-scheme: light;
+  supported-color-schemes: light;
   --background: #f8fafc;
   --foreground: #0f172a;
 
@@ -13,6 +18,27 @@
   --accent-gold-light: #fef9c3;
   --surface-card: #ffffff;
   --surface-border: #e2e8f0;
+}
+
+html,
+body,
+input,
+select,
+textarea,
+button,
+dialog {
+  color-scheme: light !important;
+}
+
+/* Hard override in case browser or OS prefers-color-scheme dark tries to invert */
+@media (prefers-color-scheme: dark) {
+  :root,
+  html,
+  body {
+    color-scheme: light !important;
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+  }
 }
 
 body {
