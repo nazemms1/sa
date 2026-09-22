@@ -17,7 +17,7 @@ import {
 import { motion } from "framer-motion";
 
 interface ServicesProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (serviceName?: string) => void;
 }
 
 export const Services: React.FC<ServicesProps> = ({ onOpenQuoteModal }) => {
@@ -103,7 +103,7 @@ export const Services: React.FC<ServicesProps> = ({ onOpenQuoteModal }) => {
               </div>
 
               <button
-                onClick={onOpenQuoteModal}
+                onClick={() => onOpenQuoteModal(item.title)}
                 className="w-full py-3 px-4 rounded-xl text-xs font-bold text-[#0f2a4a] bg-slate-50 border border-slate-200 hover:bg-[#0f2a4a] hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm"
               >
                 <span>{serv.detailsBtn}</span>

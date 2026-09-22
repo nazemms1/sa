@@ -17,9 +17,23 @@ import { QuoteModal } from "@/components/quote-modal";
 
 export default function Home() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedDetails, setSelectedDetails] = useState("");
   const [activeTrackingCode, setActiveTrackingCode] = useState("");
 
-  const handleOpenQuote = () => {
+  const handleOpenQuote = (serviceOrDetails?: string) => {
+    if (serviceOrDetails) {
+      if (serviceOrDetails.startsWith("نتائج الحاسبة:")) {
+        setSelectedDetails(serviceOrDetails);
+        setSelectedService("");
+      } else {
+        setSelectedService(serviceOrDetails);
+        setSelectedDetails("");
+      }
+    } else {
+      setSelectedService("");
+      setSelectedDetails("");
+    }
     setQuoteModalOpen(true);
   };
 
@@ -76,7 +90,12 @@ export default function Home() {
       <Footer />
 
       {/* Interactive Freight Quote Request Modal */}
-      <QuoteModal isOpen={quoteModalOpen} onClose={handleCloseQuote} />
+      <QuoteModal
+        isOpen={quoteModalOpen}
+        onClose={handleCloseQuote}
+        initialService={selectedService}
+        initialDetails={selectedDetails}
+      />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { Calculator as CalcIcon, Ship, Plane, CheckCircle2, ArrowLeft, ArrowRigh
 import { motion } from "framer-motion";
 
 interface CalculatorProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (details?: string) => void;
 }
 
 export const ShippingCalculator: React.FC<CalculatorProps> = ({ onOpenQuoteModal }) => {
@@ -219,7 +219,11 @@ export const ShippingCalculator: React.FC<CalculatorProps> = ({ onOpenQuoteModal
             </p>
 
             <button
-              onClick={onOpenQuoteModal}
+              onClick={() => {
+                const modeText = mode === "sea" ? `شحن بحري (${cbm} CBM)` : `شحن جوي (${kg} KG)`;
+                const calcSummary = `نتائج الحاسبة: ${modeText} - التكلفة التقديرية: $${estimatedTotal.toLocaleString()} USD`;
+                onOpenQuoteModal(calcSummary);
+              }}
               className="gold-button w-full py-4 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 shadow-lg"
             >
               <span>{calc.confirmBtn}</span>

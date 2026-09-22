@@ -17,7 +17,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (serviceName?: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
@@ -80,11 +80,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
 
       {/* Main Navbar */}
       <nav
-        className={`w-full transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200 py-3"
-            : "bg-white/90 backdrop-blur-sm border-b border-slate-100 py-4"
-        }`}
+        className={`w-full transition-all duration-300 ${isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200 py-3"
+          : "bg-white/90 backdrop-blur-sm border-b border-slate-100 py-4"
+          }`}
       >
         <div className="layout-container flex items-center justify-between">
           {/* Logo Brand */}
@@ -138,8 +137,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
               <span>{content.header.languageName}</span>
             </button>
 
-            {/* Request Quote Button */}
-            <button onClick={onOpenQuoteModal} className="gold-button px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
+            <button onClick={() => onOpenQuoteModal()} className="gold-button px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
               <span>{content.header.quoteBtn}</span>
               {isRtl ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
             </button>

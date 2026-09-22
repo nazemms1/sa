@@ -17,7 +17,7 @@ import {
 import { motion } from "framer-motion";
 
 interface HeroProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (serviceName?: string) => void;
   onSearchTracking?: (code: string) => void;
 }
 
@@ -247,7 +247,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
 
               {/* Direct Action Button */}
               <button
-                onClick={onOpenQuoteModal}
+                onClick={() => onOpenQuoteModal()}
                 className="w-full navy-button py-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2"
               >
                 <span>{content.hero.routeCard.ctaBtn}</span>
