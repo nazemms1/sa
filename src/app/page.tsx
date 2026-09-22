@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-amber-400 selection:text-slate-900">
+    <div className="min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-900">
       {/* Modern Sticky Light Header */}
       <Header onOpenQuoteModal={handleOpenQuote} />
 

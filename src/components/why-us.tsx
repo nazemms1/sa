@@ -25,7 +25,7 @@ export const WhyUs: React.FC = () => {
   };
 
   return (
-    <section id="whyus" className="py-24 bg-[#0a192f] text-white relative overflow-hidden">
+    <section id="whyus" className="py-24 bg-[#0a192f]/92 text-white relative overflow-hidden">
       {/* Subtle Glow Spheres */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />

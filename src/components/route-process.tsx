@@ -10,7 +10,7 @@ export const RouteProcess: React.FC = () => {
   const proc = content.process;
 
   return (
-    <section id="process" className="py-24 bg-white relative overflow-hidden border-t border-slate-200/80">
+    <section id="process" className="py-24 bg-white/80 relative overflow-hidden border-t border-slate-200/80">
       <div className="layout-container">
         
         {/* Section Header */}

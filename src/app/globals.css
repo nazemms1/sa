@@ -36,13 +36,43 @@ dialog {
   html,
   body {
     color-scheme: light !important;
-    background-color: #f8fafc !important;
     color: #0f172a !important;
+  }
+
+  html {
+    background-color: #f8fafc !important;
+  }
+
+  /* Stays transparent so the fixed background video remains visible */
+  body {
+    background-color: transparent !important;
   }
 }
 
-body {
+/* The page colour lives on <html> so <body> can stay transparent above the video */
+html {
   background-color: var(--background);
+  /* iOS inflates text when a page is rotated unless this is pinned */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Grey flash on tap reads as a bug on a site this polished */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keep fixed UI clear of notches and home indicators */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+  background-color: transparent;
   color: var(--foreground);
   font-family: 'Cairo', 'Outfit', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
@@ -50,6 +80,24 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ---------------------------------------------------------------
+   Splash intro
+   - No data-splash attribute  -> first visit, intro is showing
+   - data-splash="leaving"     -> fading out, page scroll released
+   - data-splash="hidden"      -> already seen this session (set by the
+                                  inline script in layout.tsx before paint)
+   --------------------------------------------------------------- */
+html:not([data-splash]) body {
+  overflow: hidden;
+}
+
+html[data-splash='hidden'] #splash-screen {
+  display: none;
+}
+
+/* Without JavaScript the intro can never dismiss itself; see the <noscript>
+   fallback in layout.tsx, which hides it and releases the scroll lock. */
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -229,4 +277,49 @@ body {
 
 .animate-pulse-glow {
   animation: pulseGlow 4s infinite ease-in-out;
+}
+
+/* ---------------------------------------------------------------
+   Brand plane (traced from the logo animation in background.mp4).
+   The craft climbs the gold swoosh, holds at the top, then loops.
+   Translate values are in the inner group's scaled units (x0.6).
+   --------------------------------------------------------------- */
+@keyframes brandPlaneClimb {
+  0% { transform: translate(-97px, 53px) scale(0.72); opacity: 0; }
+  8% { opacity: 1; }
+  52% { transform: translate(0, 0) scale(1); opacity: 1; }
+  86% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(24px, -13px) scale(1.05); opacity: 0; }
+}
+
+@keyframes brandPlaneTrail {
+  0% { stroke-dashoffset: 80; opacity: 0; }
+  8% { opacity: 0.95; }
+  52% { stroke-dashoffset: 0; opacity: 0.95; }
+  86% { stroke-dashoffset: 0; opacity: 0.95; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.brand-plane__craft {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brandPlaneClimb 5s cubic-bezier(0.33, 0.9, 0.42, 1) infinite;
+}
+
+.brand-plane__trail {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation: brandPlaneTrail 5s cubic-bezier(0.33, 0.9, 0.42, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-plane__craft,
+  .brand-plane__trail {
+    animation: none;
+  }
+
+  .brand-plane__trail {
+    stroke-dashoffset: 0;
+    opacity: 0.95;
+  }
 }

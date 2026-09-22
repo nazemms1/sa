@@ -10,7 +10,7 @@ export const RegionalGateways: React.FC = () => {
   const gate = content.gateways;
 
   return (
-    <section id="gateways" className="py-24 bg-gradient-to-br from-[#0f2a4a] via-[#0a192f] to-slate-900 text-white relative overflow-hidden border-y border-slate-800">
+    <section id="gateways" className="py-24 bg-gradient-to-br from-[#0f2a4a]/94 via-[#0a192f]/94 to-slate-900/94 text-white relative overflow-hidden border-y border-slate-800">
       {/* Glow Effects */}
       <div className="absolute top-0 right-1/3 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
 

@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="bg-[#0a192f] text-white pt-20 pb-12 relative overflow-hidden border-t border-slate-800">
+    <footer id="contact" className="bg-[#0a192f]/94 text-white pt-20 pb-12 relative overflow-hidden border-t border-slate-800">
       <div className="layout-container">
         
         {/* Main 4-Column Layout */}

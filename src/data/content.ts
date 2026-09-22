@@ -58,6 +58,11 @@ export interface FaqItem {
 }
 
 export interface ContentTranslation {
+  splash: {
+    tagline: string;
+    loadingLabel: string;
+    skipBtn: string;
+  };
   header: {
     brandName: string;
     brandSubtitle: string;
@@ -404,6 +409,11 @@ export const sampleTrackingData: Record<"ar" | "en", Record<string, TrackingResu
 
 export const siteContent: Record<"ar" | "en", ContentTranslation> = {
   ar: {
+    splash: {
+      tagline: "شحن عالمي • خبرة إقليمية • تسليم موثوق إلى سوريا",
+      loadingLabel: "جاري تجهيز المنصة",
+      skipBtn: "تخطي المقدمة",
+    },
     header: {
       brandName: "S.A. LOGISTICS",
       brandSubtitle: "حلول ذكية لخدمات الشحن المتقدمة",
@@ -824,6 +834,11 @@ export const siteContent: Record<"ar" | "en", ContentTranslation> = {
     },
   },
   en: {
+    splash: {
+      tagline: "Global Freight • Regional Expertise • Trusted Delivery to Syria",
+      loadingLabel: "Preparing the platform",
+      skipBtn: "Skip intro",
+    },
     header: {
       brandName: "S.A. LOGISTICS",
       brandSubtitle: "Smart Solutions for Advance Logistics",

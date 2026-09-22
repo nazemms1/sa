@@ -15,7 +15,7 @@ export const Faq: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-white relative overflow-hidden border-t border-slate-200/80">
+    <section id="faq" className="py-24 bg-white/80 relative overflow-hidden border-t border-slate-200/80">
       <div className="layout-container">
         
         {/* Section Header */}

@@ -44,7 +44,7 @@ export const Services: React.FC<ServicesProps> = ({ onOpenQuoteModal }) => {
   };
 
   return (
-    <section id="services" className="py-24 bg-slate-50 relative overflow-hidden">
+    <section id="services" className="py-24 bg-slate-50/80 relative overflow-hidden">
       <div className="layout-container">
         
         {/* Section Header */}

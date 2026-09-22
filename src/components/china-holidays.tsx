@@ -10,7 +10,7 @@ export const ChinaHolidays: React.FC = () => {
   const notice = content.holidaysNotice;
 
   return (
-    <section id="holidays" className="py-20 bg-white relative overflow-hidden border-y border-slate-200/80">
+    <section id="holidays" className="py-20 bg-white/80 relative overflow-hidden border-y border-slate-200/80">
       <div className="layout-container">
         
         {/* Section Title Header */}

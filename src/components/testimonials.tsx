@@ -10,7 +10,7 @@ export const Testimonials: React.FC = () => {
   const test = content.testimonials;
 
   return (
-    <section className="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200/80">
+    <section className="py-24 bg-slate-50/80 relative overflow-hidden border-t border-slate-200/80">
       <div className="layout-container">
         
         {/* Section Header */}

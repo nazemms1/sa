@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/language-context";
+import { BrandPlane } from "@/components/brand-plane";
 import {
   Phone,
   MessageSquare,
@@ -9,7 +10,6 @@ import {
   Menu,
   X,
   Ship,
-  Plane,
   ArrowLeft,
   ArrowRight,
   ShieldCheck,
@@ -49,29 +49,30 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
   return (
     <header className="sticky top-0 z-50 w-full transition-all duration-300">
       {/* Top Bar Notice Strip */}
-      <div className="bg-[#0f2a4a] text-white text-xs py-2 px-4 border-b border-amber-500/30">
-        <div className="layout-container flex flex-col md:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-2 text-amber-300 font-bold">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+      <div className="bg-[#0f2a4a] text-white text-xs py-1.5 px-4 border-b border-amber-500/30 safe-top">
+        <div className="layout-container flex flex-col md:flex-row justify-between items-center gap-1 md:gap-2">
+          <div className="flex items-center gap-2 text-amber-300 font-bold text-center">
+            <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping flex-shrink-0" />
             <span>S.A. LOGISTICS | {content.footer.chinaTagline}</span>
           </div>
 
-          <div className="flex items-center gap-5 text-slate-200">
+          {/* py-2 keeps these comfortably tappable on a phone */}
+          <div className="flex items-center gap-3 sm:gap-5 text-slate-200">
             <a
               href={`tel:${content.header.contactPhone}`}
-              className="flex items-center gap-1.5 hover:text-amber-300 transition-colors font-bold"
+              className="flex items-center gap-1.5 py-2 hover:text-amber-300 transition-colors font-bold"
             >
-              <Phone className="w-3.5 h-3.5 text-amber-400" />
+              <Phone className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
               <span dir="ltr">{content.header.contactPhone}</span>
             </a>
-            <span className="text-slate-600">|</span>
+            <span className="text-slate-600" aria-hidden="true">|</span>
             <a
               href="https://wa.me/963966642574"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1.5 text-emerald-300 font-bold hover:text-white transition-colors bg-emerald-950/70 px-3 py-0.5 rounded-full border border-emerald-500/40"
+              className="flex items-center gap-1.5 text-emerald-300 font-bold hover:text-white transition-colors bg-emerald-950/70 px-3 py-1.5 rounded-full border border-emerald-500/40"
             >
-              <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+              <MessageSquare className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
               <span>{content.header.whatsappText}</span>
             </a>
           </div>
@@ -89,10 +90,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
           {/* Logo Brand */}
           <a href="#home" className="flex items-center gap-3 group">
             <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0f2a4a] to-[#0a192f] p-2.5 flex items-center justify-center shadow-lg shadow-blue-950/20 group-hover:scale-105 transition-transform">
-              <div className="relative flex items-center justify-center">
-                <Ship className="w-6 h-6 text-amber-400" />
-                <Plane className="w-3.5 h-3.5 text-sky-200 absolute -top-1 -right-1 transform rotate-45" />
-              </div>
+              <Ship className="w-6 h-6 text-amber-400" />
+              {/* Plane lifted straight out of the logo animation */}
+              <BrandPlane className="absolute top-0.5 right-0.5 w-10 text-sky-100" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">

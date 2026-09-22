@@ -38,7 +38,7 @@ export const ShippingCalculator: React.FC<CalculatorProps> = ({ onOpenQuoteModal
   const estimatedTotal = calculateCost();
 
   return (
-    <section id="calculator" className="py-20 bg-white relative overflow-hidden border-t border-slate-200/80">
+    <section id="calculator" className="py-20 bg-white/80 relative overflow-hidden border-t border-slate-200/80">
       <div className="layout-container">
         
         {/* Section Header */}

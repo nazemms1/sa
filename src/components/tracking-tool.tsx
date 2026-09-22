@@ -78,7 +78,7 @@ export const TrackingTool: React.FC<TrackingToolProps> = ({ initialCode = "" }) 
   };
 
   return (
-    <section id="tracking" className="py-20 bg-slate-50 relative overflow-hidden">
+    <section id="tracking" className="py-20 bg-slate-50/80 relative overflow-hidden">
       <div className="layout-container">
         
         {/* Section Header */}

@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
   };
 
   return (
-    <section id="home" className="relative pt-8 pb-20 lg:pt-14 lg:pb-24 overflow-hidden bg-slate-50/90">
+    <section id="home" className="relative pt-8 pb-20 lg:pt-14 lg:pb-24 overflow-hidden bg-slate-50/70">
       {/* Background Subtle Gradient Spheres & Grid Pattern */}
       <div className="absolute top-0 right-1/4 w-[700px] h-[700px] bg-blue-100/50 rounded-full blur-3xl -z-10 pointer-events-none animate-pulse-glow" />
       <div className="absolute top-1/3 left-10 w-[550px] h-[550px] bg-amber-100/40 rounded-full blur-3xl -z-10 pointer-events-none animate-pulse-glow" />
