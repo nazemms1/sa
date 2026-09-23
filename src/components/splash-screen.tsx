@@ -29,7 +29,7 @@ const PLAYBACK_RATE = 1.6;
  * autoplay was refused, the file stalled, or the tab is throttled — so we let
  * the visitor through instead of holding them on a frozen frame.
  */
-const STALL_MS = 2500;
+const STALL_MS = 4500;
 
 /** Absolute ceiling, whatever happens. */
 const SPLASH_MAX_MS = 14000;
@@ -114,20 +114,46 @@ export const SplashScreen: React.FC = () => {
     }
 
     const video = videoRef.current;
+    if (video) {
+      // Direct DOM attributes essential for iOS WebKit autoplay policy
+      video.defaultMuted = true;
+      video.muted = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "true");
+      video.setAttribute("autoplay", "");
+    }
+
     const start = () => {
       if (!video) return;
+      video.defaultMuted = true;
       video.muted = true;
-      video.playbackRate = PLAYBACK_RATE;
-      void video.play().catch(() => {
-        /* Refused (iOS Low Power Mode, data saver). The poster frame carries
-           the brand and the watchdog moves the visitor on. */
-      });
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Apply speedup ONLY after playback successfully commenced to prevent iOS WebKit stall
+            try {
+              video.playbackRate = PLAYBACK_RATE;
+            } catch (_) {}
+          })
+          .catch(() => {
+            /* iOS Low Power Mode: waiting for first user touch */
+          });
+      }
     };
 
     start();
-    // A phone that refused autoplay will usually allow it once the visitor has
-    // touched the screen; `pointerup` counts as that gesture.
-    window.addEventListener("pointerup", start, { once: true });
+
+    // Touch events for iOS Safari user gesture unlock if Low Power Mode was active
+    const handleGesture = () => {
+      start();
+    };
+
+    window.addEventListener("touchstart", handleGesture, { once: true, passive: true });
+    window.addEventListener("pointerdown", handleGesture, { once: true });
+    window.addEventListener("pointerup", handleGesture, { once: true });
+    window.addEventListener("click", handleGesture, { once: true });
 
     armStallWatchdog();
     const ceiling = setTimeout(dismiss, SPLASH_MAX_MS);
@@ -141,7 +167,10 @@ export const SplashScreen: React.FC = () => {
       clearTimeout(ceiling);
       clearTimeout(stallTimer.current);
       window.removeEventListener("keydown", handleKey);
-      window.removeEventListener("pointerup", start);
+      window.removeEventListener("touchstart", handleGesture);
+      window.removeEventListener("pointerdown", handleGesture);
+      window.removeEventListener("pointerup", handleGesture);
+      window.removeEventListener("click", handleGesture);
     };
   }, [dismiss, armStallWatchdog]);
 
@@ -194,6 +223,9 @@ export const SplashScreen: React.FC = () => {
               autoPlay
               muted
               playsInline
+              // @ts-expect-error iOS Safari specific attribute
+              webkit-playsinline="true"
+              controls={false}
               preload="auto"
               disablePictureInPicture
               aria-hidden="true"

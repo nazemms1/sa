@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
     { href: "#home", label: content.header.nav.home },
     { href: "#holidays", label: content.header.nav.holidays, badge: "2026" },
     { href: "#gateways", label: content.header.nav.gateways },
-    { href: "#tracking", label: content.header.nav.tracking },
+    { href: "#customs-lookup", label: isRtl ? "الاستعلام الجمركي" : "Customs Lookup", badge: isRtl ? "جديد" : "New" },
     { href: "#services", label: content.header.nav.services },
     { href: "#calculator", label: content.header.nav.calculator },
     { href: "#process", label: content.header.nav.process },

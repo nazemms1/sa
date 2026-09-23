@@ -12,22 +12,21 @@ import React, { useEffect, useRef } from "react";
  * sequence drawn into a canvas. It is also a third of the size of the video:
  * 82 frames, 377 KB in total.
  *
- *   ffmpeg -i public/background.mp4 -vf "fps=9,scale=640:1138:flags=lanczos" \
- *     -c:v libwebp -quality 70 -compression_level 6 public/bg/f%03d.webp
+ *   ffmpeg -i public/background.mp4 -vf "fps=18,scale=720:1280:flags=lanczos" \
+ *     -c:v libwebp -quality 82 -compression_level 5 public/bg/f%03d.webp
  *
- * Re-run that command whenever the source clip is replaced, and update
- * FRAME_COUNT to match.
+ * Total frames: 164 frames (18 fps over 9.1s) for ultra-smooth scrolling.
  */
-const FRAME_COUNT = 82;
+const FRAME_COUNT = 164;
 
 /** Frames are spread over this share of the page; the rest holds the last one. */
-const SCROLL_SPAN = 0.78;
+const SCROLL_SPAN = 0.82;
 
 /** How quickly the drawn frame catches up with the scroll position. */
-const EASING = 0.16;
+const EASING = 0.18;
 
 /** Parallel image requests — enough to fill quickly, few enough to stay polite. */
-const CONCURRENCY = 6;
+const CONCURRENCY = 8;
 
 const framePath = (index: number) =>
   `/bg/f${String(index + 1).padStart(3, "0")}.webp`;
