@@ -1,10 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "salogistics",
+  "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-18",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./out",
-    "not_found_handling": "404-page"
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
   },
   "routes": [
     { "pattern": "sa-logistics.net", "custom_domain": true },

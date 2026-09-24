@@ -223,7 +223,6 @@ export const SplashScreen: React.FC = () => {
               autoPlay
               muted
               playsInline
-              // @ts-expect-error iOS Safari specific attribute
               webkit-playsinline="true"
               controls={false}
               preload="auto"
