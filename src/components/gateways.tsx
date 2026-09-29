@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "@/context/language-context";
-import { Anchor, Ship, CheckCircle2, Globe2 } from "lucide-react";
+import { Anchor, Ship, CheckCircle2, Globe2, MapPin, ArrowUpFromLine } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const RegionalGateways: React.FC = () => {
@@ -32,8 +32,8 @@ export const RegionalGateways: React.FC = () => {
           </p>
         </div>
 
-        {/* 3 Main Ports Showcase Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+        {/* 4 Main Ports Showcase Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-14">
           
           {/* Latakia Port */}
           <motion.div
@@ -45,7 +45,7 @@ export const RegionalGateways: React.FC = () => {
             </div>
             <h3 className="text-xl font-black text-amber-300 mb-2">{gate.latakiaTitle}</h3>
             <span className="text-xs font-bold text-slate-300 block bg-white/10 py-1 px-3 rounded-full w-fit mx-auto">
-              Main Marine Gateway 🇸🇾
+              {gate.latakiaBadge}
             </span>
           </motion.div>
 
@@ -59,7 +59,7 @@ export const RegionalGateways: React.FC = () => {
             </div>
             <h3 className="text-xl font-black text-sky-300 mb-2">{gate.beirutTitle}</h3>
             <span className="text-xs font-bold text-slate-300 block bg-white/10 py-1 px-3 rounded-full w-fit mx-auto">
-              Regional Transit Gateway 🇱🇧
+              {gate.beirutBadge}
             </span>
           </motion.div>
 
@@ -73,15 +73,69 @@ export const RegionalGateways: React.FC = () => {
             </div>
             <h3 className="text-xl font-black text-emerald-300 mb-2">{gate.aqabaTitle}</h3>
             <span className="text-xs font-bold text-slate-300 block bg-white/10 py-1 px-3 rounded-full w-fit mx-auto">
-              Red Sea Transit Gateway 🇯🇴
+              {gate.aqabaBadge}
+            </span>
+          </motion.div>
+
+          {/* Mersin Port */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/15 hover:border-amber-400/80 transition-all text-center relative overflow-hidden group shadow-2xl"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-rose-400/20 text-rose-300 border border-rose-400/30 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+              <Ship className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-black text-rose-300 mb-2">{gate.mersinTitle}</h3>
+            <span className="text-xs font-bold text-slate-300 block bg-white/10 py-1 px-3 rounded-full w-fit mx-auto">
+              {gate.mersinBadge}
             </span>
           </motion.div>
 
         </div>
 
-        {/* 8 Feature Pills Grid */}
+        {/* Export Destinations & Gateways */}
+        <div className="bg-white/5 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 max-w-5xl mx-auto mb-8">
+          <div className="flex items-center gap-2 mb-6">
+            <ArrowUpFromLine className="w-5 h-5 text-amber-400" />
+            <h3 className="text-lg sm:text-xl font-black text-white">{gate.exportTitle}</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <span className="block text-xs font-black text-amber-300 mb-3">{gate.exportDestinationsLabel}</span>
+              <div className="flex flex-wrap gap-2">
+                {gate.exportDestinations.map((dest) => (
+                  <span
+                    key={dest}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 text-xs font-extrabold text-slate-100"
+                  >
+                    <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                    {dest}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <span className="block text-xs font-black text-sky-300 mb-3">{gate.exportGatewaysLabel}</span>
+              <div className="flex flex-wrap gap-2">
+                {gate.exportGateways.map((gw) => (
+                  <span
+                    key={gw}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 text-xs font-extrabold text-slate-100"
+                  >
+                    <Anchor className="w-3.5 h-3.5 text-sky-300" />
+                    {gw}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 6 Feature Pills Grid */}
         <div className="bg-white/5 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-extrabold text-slate-200">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs font-extrabold text-slate-200">
             {gate.features.map((feat, fIdx) => (
               <div key={fIdx} className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/10">
                 <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0" />

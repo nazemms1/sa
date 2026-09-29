@@ -1,40 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLanguage } from "@/context/language-context";
 import {
   Ship,
   Plane,
-  Search,
+  Globe2,
+  MapPinned,
   ArrowLeft,
   ArrowRight,
-  TrendingUp,
+  FileCheck2,
   Sparkles,
   Container,
   CheckCircle2,
-  Calendar,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface HeroProps {
   onOpenQuoteModal: (serviceName?: string) => void;
-  onSearchTracking?: (code: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
   const { content, isRtl } = useLanguage();
-  const [quickCode, setQuickCode] = useState("");
-
-  const handleQuickSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (quickCode.trim() && onSearchTracking) {
-      onSearchTracking(quickCode.trim());
-      const trackingEl = document.getElementById("tracking");
-      if (trackingEl) {
-        trackingEl.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
 
   return (
     <section id="home" className="relative pt-8 pb-20 lg:pt-14 lg:pb-24 overflow-hidden bg-slate-50/70">
@@ -81,48 +68,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
               {content.hero.companyStatement}
             </div>
 
-            {/* Hero Quick Action Input Bar */}
-            <div className="pt-2">
-              <form
-                onSubmit={handleQuickSearch}
-                className="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-2xl flex flex-col sm:flex-row items-center gap-2 max-w-2xl transition-all hover:border-amber-400"
-              >
-                <div className="relative w-full flex items-center">
-                  <Search className="w-5 h-5 text-slate-400 absolute right-4 left-auto rtl:right-4 rtl:left-auto ltr:left-4 ltr:right-auto pointer-events-none" />
-                  <input
-                    type="text"
-                    value={quickCode}
-                    onChange={(e) => setQuickCode(e.target.value)}
-                    placeholder={content.hero.quickTrackPlaceholder}
-                    className="w-full py-3.5 px-12 text-sm bg-slate-50/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0f2a4a] focus:bg-white text-slate-800 placeholder-slate-400 font-bold"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto navy-button px-8 py-3.5 text-xs font-extrabold rounded-xl whitespace-nowrap flex items-center justify-center gap-2 shadow-lg"
-                >
-                  <span>{content.hero.quickTrackBtn}</span>
-                  {isRtl ? <ArrowLeft className="w-4 h-4 text-amber-400" /> : <ArrowRight className="w-4 h-4 text-amber-400" />}
-                </button>
-              </form>
-            </div>
-
             {/* Primary Action Buttons */}
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <a
-                href="#calculator"
+                href="#customs-lookup"
                 className="gold-button px-8 py-4 rounded-xl text-sm font-extrabold flex items-center gap-2 shadow-xl shadow-amber-500/20"
               >
                 <span>{content.hero.primaryCta}</span>
-                <TrendingUp className="w-4.5 h-4.5 text-slate-950" />
-              </a>
-
-              <a
-                href="#holidays"
-                className="px-7 py-4 rounded-xl text-sm font-extrabold text-[#0f2a4a] bg-white border border-slate-300 hover:border-[#0f2a4a] hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm hover:shadow-md"
-              >
-                <Calendar className="w-4.5 h-4.5 text-amber-600" />
-                <span>{content.hero.secondaryCta}</span>
+                <FileCheck2 className="w-4.5 h-4.5 text-slate-950" />
               </a>
             </div>
 
@@ -162,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
                   </span>
                 </div>
                 <span className="px-3.5 py-1 text-[11px] font-black rounded-full bg-amber-100 text-amber-950 border border-amber-300">
-                  GLOBAL 🌍 ➡ SYRIA 🇸🇾
+                  {content.hero.routeCard.routeBadge}
                 </span>
               </div>
 
@@ -210,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
                   {/* Origin */}
                   <div className="text-center z-10">
                     <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
-                      🌍
+                      <Globe2 className="w-5 h-5 text-sky-300" />
                     </div>
                     <div className="text-xs font-bold text-white">{content.hero.routeCard.originHub}</div>
                     <div className="text-[10px] text-slate-300">{content.hero.routeCard.saHubsLabel}</div>
@@ -232,16 +185,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onSearchTracking }
                   {/* Destination */}
                   <div className="text-center z-10">
                     <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
-                      🇸🇾
+                      <MapPinned className="w-5 h-5 text-amber-400" />
                     </div>
                     <div className="text-xs font-bold text-white">{content.hero.routeCard.destHub}</div>
                     <div className="text-[10px] text-slate-300">{content.hero.routeCard.finalDeliveryLabel}</div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/10 text-xs text-slate-300 flex items-center justify-between font-medium">
+                <div className="pt-2 border-t border-white/10 text-xs text-slate-300 font-medium">
                   <span>{content.hero.routeCard.liveContainer}</span>
-                  <span className="text-emerald-400 font-black">{content.hero.routeCard.insuranceBadge}</span>
                 </div>
               </div>
 

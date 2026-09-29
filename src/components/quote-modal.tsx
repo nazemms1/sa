@@ -49,33 +49,33 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     const shippingType =
       formData.type === "sea"
         ? language === "ar"
-          ? "🚢 شحن بحري (FCL / LCL)"
-          : "🚢 Sea Freight (FCL / LCL)"
+          ? "شحن بحري (FCL / LCL)"
+          : "Sea Freight (FCL / LCL)"
         : language === "ar"
-          ? "✈️ شحن جوي سريع"
-          : "✈️ Express Air Freight";
+          ? "شحن جوي سريع"
+          : "Express Air Freight";
 
     const serviceLine = formData.cargo
       ? language === "ar"
-        ? `📌 الخدمة المطلوبة: ${formData.cargo}\n`
-        : `📌 Requested Service: ${formData.cargo}\n`
+        ? `الخدمة المطلوبة: ${formData.cargo}\n`
+        : `Requested Service: ${formData.cargo}\n`
       : "";
 
     const message =
       language === "ar"
         ? `مرحباً S.A. LOGISTICS، أرغب بتقديم طلب / استشارة جديدة:
 
-👤 *الاسم / الشركة:* ${formData.name}
-📱 *رقم التواصل:* ${formData.phone}
-📦 *وسيلة الشحن:* ${shippingType}
-${serviceLine}📝 *تفاصيل الطلب / الاستشارة:*
+*الاسم / الشركة:* ${formData.name}
+*رقم التواصل:* ${formData.phone}
+*وسيلة الشحن:* ${shippingType}
+${serviceLine}*تفاصيل الطلب / الاستشارة:*
 ${formData.details || "لا توجد تفاصيل إضافية"}`
         : `Hello S.A. LOGISTICS, I would like to request a quote / consultation:
 
-👤 *Name / Company:* ${formData.name}
-📱 *Contact Phone:* ${formData.phone}
-📦 *Shipping Mode:* ${shippingType}
-${serviceLine}📝 *Details / Inquiry:*
+*Name / Company:* ${formData.name}
+*Contact Phone:* ${formData.phone}
+*Shipping Mode:* ${shippingType}
+${serviceLine}*Details / Inquiry:*
 ${formData.details || "N/A"}`;
 
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(

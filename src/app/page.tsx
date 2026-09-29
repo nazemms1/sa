@@ -1,38 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { RegionalGateways } from "@/components/gateways";
-import { ChinaHolidays } from "@/components/china-holidays";
+import { Airports } from "@/components/airports";
 import { CustomsLookup } from "@/components/customs-lookup";
 import { Services } from "@/components/services";
-import { ShippingCalculator } from "@/components/calculator";
 import { RouteProcess } from "@/components/route-process";
 import { WhyUs } from "@/components/why-us";
-import { Testimonials } from "@/components/testimonials";
-import { Faq } from "@/components/faq";
+import { FaqModal } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { QuoteModal } from "@/components/quote-modal";
 
 export default function Home() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
-  const [selectedDetails, setSelectedDetails] = useState("");
+  const [faqModalOpen, setFaqModalOpen] = useState(false);
 
-  const handleOpenQuote = (serviceOrDetails?: string) => {
-    if (serviceOrDetails) {
-      if (serviceOrDetails.startsWith("نتائج الحاسبة:")) {
-        setSelectedDetails(serviceOrDetails);
-        setSelectedService("");
-      } else {
-        setSelectedService(serviceOrDetails);
-        setSelectedDetails("");
-      }
-    } else {
-      setSelectedService("");
-      setSelectedDetails("");
-    }
+  const handleOpenQuote = (serviceName?: string) => {
+    setSelectedService(serviceName ?? "");
     setQuoteModalOpen(true);
   };
 
@@ -40,21 +27,23 @@ export default function Home() {
     setQuoteModalOpen(false);
   };
 
+  const handleCloseFaq = useCallback(() => setFaqModalOpen(false), []);
+
   return (
     <div className="min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-900">
       {/* Modern Sticky Light Header */}
-      <Header onOpenQuoteModal={handleOpenQuote} />
+      <Header onOpenQuoteModal={handleOpenQuote} onOpenFaq={() => setFaqModalOpen(true)} />
 
       {/* Main Page Content */}
       <main className="flex-grow">
         {/* Redesigned High-Impact Light Mode Hero */}
         <Hero onOpenQuoteModal={handleOpenQuote} />
 
-        {/* Key Regional Gateways (Latakia, Beirut & Aqaba Ports) */}
+        {/* Key Regional Gateways (Latakia, Beirut, Aqaba & Mersin Ports) + Export */}
         <RegionalGateways />
 
-        {/* China Official Holidays Announcement Card (Matching uploaded poster) */}
-        <ChinaHolidays />
+        {/* Airports & Air Freight (Damascus, Amman, Beirut) */}
+        <Airports />
 
         {/* Syrian Customs HS Code Lookup & Tariff Duty Estimator */}
         <CustomsLookup onOpenQuoteModal={handleOpenQuote} />
@@ -62,20 +51,11 @@ export default function Home() {
         {/* Services Grid (Air & Sea FCL/LCL, Transit, Customs, Project Cargo) */}
         <Services onOpenQuoteModal={handleOpenQuote} />
 
-        {/* Freight Cost Estimator & Rate Calculator */}
-        <ShippingCalculator onOpenQuoteModal={handleOpenQuote} />
-
         {/* 5 Operational Pillars Process Journey */}
         <RouteProcess />
 
         {/* Corporate Strengths & Syria Logistics Experience */}
         <WhyUs />
-
-        {/* Syrian Merchants Testimonials */}
-        <Testimonials />
-
-        {/* Importers FAQ Accordion */}
-        <Faq />
       </main>
 
       {/* Footer */}
@@ -86,8 +66,10 @@ export default function Home() {
         isOpen={quoteModalOpen}
         onClose={handleCloseQuote}
         initialService={selectedService}
-        initialDetails={selectedDetails}
       />
+
+      {/* Importers FAQ Popup */}
+      <FaqModal isOpen={faqModalOpen} onClose={handleCloseFaq} />
     </div>
   );
 }

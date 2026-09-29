@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
       const permMatch = cardContent.match(/<span class="pm"[^>]*>([\s\S]*?)<\/span>/);
       const statusText = permMatch
         ? permMatch[1].replace(/<[^>]+>/g, "").trim()
-        : "✅ مسموح";
+        : "مسموح";
 
       let statusType: "allowed" | "banned" | "restricted" | "unknown" = "allowed";
       if (statusText.includes("ممنوع") || statusText.includes("حظر")) {
@@ -137,6 +137,8 @@ export async function GET(request: NextRequest) {
 
       while ((fMatch = feeRegex.exec(cardContent)) !== null) {
         const rawLabel = fMatch[1].replace(/<[^>]+>/g, "").trim();
+        // Clearance fees are not shown on the site
+        if (rawLabel.includes("تخليص")) continue;
         const rawValue = fMatch[2]
           .replace(/<[^>]+>/g, " ")
           .replace(/&quot;/g, '"')

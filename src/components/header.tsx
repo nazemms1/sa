@@ -18,9 +18,17 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
   onOpenQuoteModal: (serviceName?: string) => void;
+  onOpenFaq: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
+interface NavLink {
+  href: string;
+  label: string;
+  badge?: string;
+  onClick?: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) => {
   const { content, lang, toggleLang, isRtl } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,16 +41,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { href: "#home", label: content.header.nav.home },
-    { href: "#holidays", label: content.header.nav.holidays, badge: "2026" },
     { href: "#gateways", label: content.header.nav.gateways },
     { href: "#customs-lookup", label: isRtl ? "الاستعلام الجمركي" : "Customs Lookup", badge: isRtl ? "جديد" : "New" },
     { href: "#services", label: content.header.nav.services },
-    { href: "#calculator", label: content.header.nav.calculator },
     { href: "#process", label: content.header.nav.process },
     { href: "#whyus", label: content.header.nav.whyUs },
-    { href: "#faq", label: content.header.nav.faq },
+    { href: "#faq", label: content.header.nav.faq, onClick: onOpenFaq },
     { href: "#contact", label: content.header.nav.contact },
   ];
 
@@ -112,6 +118,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
               <a
                 key={idx}
                 href={link.href}
+                onClick={(e) => {
+                  if (link.onClick) {
+                    e.preventDefault();
+                    link.onClick();
+                  }
+                }}
                 className="text-xs font-extrabold text-slate-700 hover:text-[#0f2a4a] transition-colors relative py-1 group whitespace-nowrap"
               >
                 <span>{link.label}</span>
@@ -176,7 +188,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
                 <a
                   key={idx}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    if (link.onClick) {
+                      e.preventDefault();
+                      link.onClick();
+                    }
+                  }}
                   className="block px-3 py-2 rounded-lg text-sm font-bold text-slate-800 hover:bg-slate-50 hover:text-[#0f2a4a] transition-colors"
                 >
                   <div className="flex items-center justify-between">

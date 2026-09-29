@@ -14,11 +14,12 @@ import {
   DollarSign,
   Send,
   MessageCircle,
-  HelpCircle,
   RotateCcw,
   Sparkles,
   Loader2,
   Layers,
+  ArrowDownToLine,
+  ArrowUpFromLine,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LiveCustomsItem, LiveCustomsResponse } from "@/data/customs-data";
@@ -111,7 +112,7 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
 
   // Real calculation based on live fetched fees
   const calculateEstimatedDuties = () => {
-    if (!currentItem) return { fixedCost: 0, percentageCost: 0, clearance: 0, total: 0 };
+    if (!currentItem) return { fixedCost: 0, percentageCost: 0, total: 0 };
 
     const fixedUnitCost = currentItem.fixedFeeAmount || 0;
     const fixedTotal = fixedUnitCost * (cargoQuantity || 0);
@@ -119,22 +120,11 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
     const pctRate = currentItem.percentageTotal || 0;
     const percentageTotal = (cargoValueUsd || 0) * (pctRate / 100);
 
-    // Look for clearance fee if returned in fees list
-    const clearanceFeeObj = currentItem.fees.find((f) =>
-      f.label.includes("تخليص")
-    );
-    let clearance = 100;
-    if (clearanceFeeObj) {
-      const m = clearanceFeeObj.value.match(/([0-9.]+)/);
-      if (m) clearance = parseFloat(m[1]);
-    }
-
-    const total = Math.round(fixedTotal + percentageTotal + clearance);
+    const total = Math.round(fixedTotal + percentageTotal);
 
     return {
       fixedCost: Math.round(fixedTotal),
       percentageCost: Math.round(percentageTotal),
-      clearance,
       total,
     };
   };
@@ -204,7 +194,7 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <span>📥</span>
+                <ArrowDownToLine className="w-3.5 h-3.5" />
                 <span>{isRtl ? "استيراد إلى سوريا" : "Import to Syria"}</span>
               </button>
               <button
@@ -219,7 +209,7 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <span>📤</span>
+                <ArrowUpFromLine className="w-3.5 h-3.5" />
                 <span>{isRtl ? "تصدير من سوريا" : "Export from Syria"}</span>
               </button>
             </div>
@@ -593,15 +583,6 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
                         ${calcBreakdown.percentageCost.toLocaleString()}
                       </span>
                     </div>
-
-                    <div>
-                      <span className="text-white/60">
-                        {isRtl ? "الكشف والتخليص: " : "Clearance & Inspection: "}
-                      </span>
-                      <span className="font-mono font-bold text-white">
-                        ${calcBreakdown.clearance}
-                      </span>
-                    </div>
                   </div>
                 </div>
 
@@ -640,7 +621,7 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
                     </button>
 
                     <a
-                      href="https://wa.me/963965101647"
+                      href="https://wa.me/963966642574"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 sm:flex-initial py-3.5 px-6 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
@@ -651,42 +632,11 @@ export const CustomsLookup: React.FC<CustomsLookupProps> = ({
                       </span>
                     </a>
                   </div>
-
-                  <a
-                    href={sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-black text-slate-500 hover:text-[#0f2a4a] transition-colors py-2 px-3 rounded-lg hover:bg-slate-100 cursor-pointer"
-                  >
-                    <span>
-                      {isRtl
-                        ? "عرض البند على موقع التعريفة الرسمي (hs-exp.net)"
-                        : "View on Official Site"}
-                    </span>
-                    <ExternalLink className="w-3.5 h-3.5 text-amber-600" />
-                  </a>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Informational Guidance Box */}
-        <div className="mt-12 max-w-4xl mx-auto p-6 bg-amber-50/70 border border-amber-200/80 rounded-2xl flex items-start gap-4 text-xs text-amber-950">
-          <HelpCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <p className="font-bold">
-              {isRtl
-                ? "بيانات حية مباشرة من التعريفة الجمركية السورية:"
-                : "Live Data Directly from Syrian Customs Tariff:"}
-            </p>
-            <p className="text-slate-600 leading-relaxed">
-              {isRtl
-                ? "يتم جلب هذه البيانات ورسوم الاستيراد والإنفاق الاستهلاكي والملاحظات في الوقت الحقيقي من خوادم التعريفة الجمركية السورية الرسمية دون أي بيانات افتراضية، مما يضمن دقة ومطابقة البنود لأحدث القرارات الصادرة."
-                : "All data, fees and legal notes are pulled in real time directly from official Syrian customs database with zero mock data."}
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );

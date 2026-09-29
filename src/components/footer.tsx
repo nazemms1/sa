@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
           {/* Column 2: China & Global Hubs */}
           <div className="space-y-4">
             <h4 className="text-sm font-black text-amber-400 uppercase tracking-wider">
-              {cont.chinaTitle} 🇨🇳
+              {cont.chinaTitle}
             </h4>
 
             <div className="space-y-3 text-xs sm:text-sm text-slate-300 font-normal">
@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
           {/* Column 3: Syria Main Office */}
           <div className="space-y-4">
             <h4 className="text-sm font-black text-amber-400 uppercase tracking-wider">
-              {cont.syriaTitle} 🇸🇾
+              {cont.syriaTitle}
             </h4>
 
             <div className="space-y-3 text-xs sm:text-sm text-slate-300 font-normal">
