@@ -87,9 +87,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
 
       {/* Main Navbar */}
       <nav
-        className={`w-full transition-all duration-300 ${isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200 py-3"
-          : "bg-white/90 backdrop-blur-sm border-b border-slate-100 py-4"
+        className={`w-full transition-all duration-300 shadow-md ${isScrolled
+          ? "bg-white/95 backdrop-blur-md border-b border-slate-200 py-3"
+          : "bg-white/95 backdrop-blur-sm border-b border-slate-200 py-4"
           }`}
       >
         <div className="layout-container flex items-center justify-between">
@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8">
+          <div className="hidden xl:flex items-center gap-2.5 2xl:gap-5">
             {navLinks.map((link, idx) => (
               <a
                 key={idx}
@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
                     link.onClick();
                   }
                 }}
-                className="text-xs font-extrabold text-slate-700 hover:text-[#0f2a4a] transition-colors relative py-1 group whitespace-nowrap"
+                className="text-xs font-extrabold text-slate-700 hover:text-[#0f2a4a] transition-colors relative py-1 px-1 group whitespace-nowrap"
               >
                 <span>{link.label}</span>
                 {link.badge && (
@@ -138,7 +138,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
           </div>
 
           {/* Right Action Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             {/* Language Switcher */}
             <button
               onClick={toggleLang}
@@ -149,17 +149,24 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
               <span>{content.header.languageName}</span>
             </button>
 
-            <button onClick={() => onOpenQuoteModal()} className="gold-button px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
+            <button onClick={() => onOpenQuoteModal()} className="gold-button px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
               <span>{content.header.quoteBtn}</span>
               {isRtl ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile & Tablet Controls */}
+          <div className="flex xl:hidden items-center gap-2">
+            <button
+              onClick={() => onOpenQuoteModal()}
+              className="gold-button px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 whitespace-nowrap"
+            >
+              <span>{content.header.quoteBtn}</span>
+              {isRtl ? <ArrowLeft className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
+            </button>
             <button
               onClick={toggleLang}
-              className="p-2 text-xs font-bold text-slate-700 rounded-lg border border-slate-200 bg-slate-50"
+              className="px-2.5 py-1.5 text-xs font-bold text-slate-700 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100"
             >
               {lang === "ar" ? "EN" : "عربي"}
             </button>
@@ -168,20 +175,20 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
               className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 border border-slate-200 focus:outline-none"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-b border-slate-200 shadow-xl overflow-hidden"
+            className="xl:hidden bg-white border-b border-slate-200 shadow-xl overflow-hidden"
           >
             <div className="px-4 py-5 space-y-3">
               {navLinks.map((link, idx) => (
