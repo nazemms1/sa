@@ -8,12 +8,12 @@ import { useLanguage } from "@/context/language-context";
 export const SPLASH_SESSION_KEY = "sa_logistics_splash_seen";
 
 /**
- * The intro plays straight through, so this copy is encoded with a normal GOP
- * instead of the all-intra one scrubbing would need — 228 KB against the
- * 2.95 MB source:
+ * The splash clip displays the final ~4 seconds of the logo animation (where
+ * the ship, airplane, and brand lockup are revealed).
  *
- *   ffmpeg -i public/background.mp4 -an -vf "fps=30" -c:v libx264 \
- *     -preset veryslow -crf 28 -pix_fmt yuv420p -movflags +faststart \
+ * FFmpeg command to export the last 4 seconds cleanly:
+ *   ffmpeg -sseof -4 -i public/background.mp4 -an -c:v libx264 \
+ *     -preset veryslow -crf 22 -pix_fmt yuv420p -movflags +faststart \
  *     public/background-splash.mp4
  */
 const SPLASH_VIDEO_SRC = "/background-splash.mp4";
@@ -21,18 +21,17 @@ const SPLASH_VIDEO_SRC = "/background-splash.mp4";
 /** Final frame of the clip: what a phone shows when playback is refused. */
 const SPLASH_POSTER_SRC = "/splash-poster.webp";
 
-/** The clip is 9.1s of logo build-up; at this rate it lands around 5.7s. */
-const PLAYBACK_RATE = 1.6;
+/** Duration of the clip to show: final 4.0s */
+const SPLASH_SHOW_SECONDS = 4.0;
 
-/**
- * If the playhead stops moving for this long the intro is going nowhere —
- * autoplay was refused, the file stalled, or the tab is throttled — so we let
- * the visitor through instead of holding them on a frozen frame.
- */
-const STALL_MS = 4500;
+/** Normal 1x playback for natural presentation of the 4-second ending */
+const PLAYBACK_RATE = 1.0;
 
-/** Absolute ceiling, whatever happens. */
-const SPLASH_MAX_MS = 14000;
+/** Stall watchdog timeout */
+const STALL_MS = 4000;
+
+/** Absolute ceiling */
+const SPLASH_MAX_MS = 5500;
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -52,14 +51,7 @@ const Corner: React.FC<{ className: string; delay: number }> = ({
 /**
  * Full screen intro shown once per browser session.
  *
- * The clip in /public is the company's own logo animation drawn on white, so
- * the stage is a light brand gradient and the video is composited with
- * `mix-blend-mode: multiply`: the white ground drops out and only the navy and
- * gold artwork paints over the backdrop — no video box, no hard edges.
- *
- * The component always renders the same markup on the server; repeat visits are
- * hidden before first paint by the inline script + `[data-splash="hidden"]`
- * rule in globals.css, so there is never a flash of the intro.
+ * Displays the last 4 seconds of the company's logo animation (ship & airplane reveal).
  */
 export const SplashScreen: React.FC = () => {
   const { content, isRtl } = useLanguage();
@@ -86,14 +78,32 @@ export const SplashScreen: React.FC = () => {
     stallTimer.current = setTimeout(dismiss, STALL_MS);
   }, [dismiss]);
 
-  /** Real playback position, so the bar tells the truth rather than guessing. */
+  /** Real playback position, so the bar tracks smoothly through the final 4 seconds */
   const handleTimeUpdate = useCallback(() => {
     const video = videoRef.current;
     const bar = progressRef.current;
     armStallWatchdog();
     if (!video || !bar || !video.duration) return;
-    bar.style.width = `${Math.min(100, (video.currentTime / video.duration) * 100)}%`;
+
+    // If source video has full 9s length, calculate progress over the last 4 seconds
+    const startSec = video.duration > 4.8 ? video.duration - SPLASH_SHOW_SECONDS : 0;
+    const durSec = video.duration > 4.8 ? SPLASH_SHOW_SECONDS : video.duration;
+    const current = Math.max(0, video.currentTime - startSec);
+    const progressPercent = Math.min(100, Math.max(0, (current / durSec) * 100));
+    bar.style.width = `${progressPercent}%`;
   }, [armStallWatchdog]);
+
+  const seekToEndSegment = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // If the video is longer than 4.8s, seek straight to the last 4 seconds
+    if (video.duration && video.duration > 4.8) {
+      const targetTime = Math.max(0, video.duration - SPLASH_SHOW_SECONDS);
+      if (video.currentTime < targetTime) {
+        video.currentTime = targetTime;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     let seen = false;
@@ -106,9 +116,6 @@ export const SplashScreen: React.FC = () => {
     if (seen) {
       // Re-applied here because React clears <html> attributes on the dev remount.
       document.documentElement.setAttribute("data-splash", "hidden");
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- sessionStorage
-      // is only readable on the client; the intro is already hidden by CSS at this
-      // point, so this render only drops it from the tree.
       setOpen(false);
       return;
     }
@@ -128,13 +135,14 @@ export const SplashScreen: React.FC = () => {
       if (!video) return;
       video.defaultMuted = true;
       video.muted = true;
+      seekToEndSegment();
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            // Apply speedup ONLY after playback successfully commenced to prevent iOS WebKit stall
             try {
               video.playbackRate = PLAYBACK_RATE;
+              seekToEndSegment();
             } catch (_) {}
           })
           .catch(() => {

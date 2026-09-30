@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { LanguageProvider } from "@/context/language-context";
-import { ScrollFrames } from "@/components/scroll-frames";
+import { ScrollVideo } from "@/components/scroll-video";
 import { SplashScreen } from "@/components/splash-screen";
 import "./globals.css";
 
@@ -66,8 +66,8 @@ export default function RootLayout({
         style={{ colorScheme: "light" }}
       >
         <LanguageProvider>
-          {/* Scroll-driven clip behind every section of the site */}
-          <ScrollFrames />
+          {/* Scroll-driven background video */}
+          <ScrollVideo />
 
           <div className="relative z-10 flex flex-col min-h-full">{children}</div>
 
