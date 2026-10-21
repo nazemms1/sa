@@ -1,8 +1,9 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { LanguageProvider } from "@/context/language-context";
 import { ScrollVideo } from "@/components/scroll-video";
 import { SplashScreen } from "@/components/splash-screen";
-import "./globals.css";
+import { tajawal, outfit } from "@/lib/fonts";
+import type { Lang } from "@/lib/seo";
 
 /**
  * Runs while the HTML is parsed, before the first paint: visitors who already
@@ -11,9 +12,12 @@ import "./globals.css";
  */
 const splashInitScript = `(function(){try{if(sessionStorage.getItem("sa_logistics_splash_seen")==="1")document.documentElement.setAttribute("data-splash","hidden")}catch(e){}})()`;
 
-export const viewport: Viewport = {
+export const viewportConfig: Viewport = {
   themeColor: "#f8fafc",
-  colorScheme: "light",
+  // "only light" (not just "light") is the form that tells a browser it must not
+  // force a dark theme onto the page, as Samsung Internet and Chrome do on
+  // phones with dark mode enabled.
+  colorScheme: "only light",
   width: "device-width",
   initialScale: 1,
   // Lets fixed UI reach under the notch, where `env(safe-area-inset-*)` keeps
@@ -21,39 +25,23 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export const metadata: Metadata = {
-  title: "S.A. LOGISTICS | الشحن اللوجستي والتخليص الجمركي من الصين إلى سوريا",
-  description:
-    "شركة S.A. LOGISTICS المتخصصة في الشحن الجوي والبحري والتخليص الجمركي من الصين إلى سوريا. مستودعات في غوانزو وإيوا، وتخليص مباشر بموانئ اللاذقية وطرطوس ودمشق.",
-  keywords: [
-    "شحن من الصين الى سوريا",
-    "تخليص جمركي اللاذقية",
-    "شحن بحري دمشق",
-    "مستودعات إيوا وغوانزو",
-    "SA LOGISTICS",
-    "العطل الرسمية بالصين 2026",
-  ],
-  other: {
-    "color-scheme": "light",
-    "supported-color-schemes": "light",
-  },
-};
-
-export default function RootLayout({
+/** Shared <html>/<body> for both language roots (`/` and `/en`). */
+export function RootShell({
+  lang,
   children,
-}: Readonly<{
+}: {
+  lang: Lang;
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html
-      lang="ar"
-      dir="rtl"
-      className="h-full scroll-smooth light"
-      style={{ colorScheme: "light" }}
+      lang={lang}
+      dir={lang === "ar" ? "rtl" : "ltr"}
+      className={`${tajawal.variable} ${outfit.variable} h-full scroll-smooth light`}
+      style={{ colorScheme: "only light" }}
       suppressHydrationWarning
     >
       <head>
-        <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
         <script dangerouslySetInnerHTML={{ __html: splashInitScript }} />
         <noscript>
@@ -63,9 +51,9 @@ export default function RootLayout({
       </head>
       <body
         className="min-h-full flex flex-col text-slate-900 font-sans antialiased"
-        style={{ colorScheme: "light" }}
+        style={{ colorScheme: "only light" }}
       >
-        <LanguageProvider>
+        <LanguageProvider initialLang={lang}>
           {/* Scroll-driven background video */}
           <ScrollVideo />
 
@@ -78,4 +66,3 @@ export default function RootLayout({
     </html>
   );
 }
-

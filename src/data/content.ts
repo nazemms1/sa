@@ -181,6 +181,7 @@ export interface ContentTranslation {
     officialAddress: string;
     officialPhone: string;
     officialEmail: string;
+    salesEmail: string;
   };
   footer: {
     description: string;
@@ -477,7 +478,7 @@ export const siteContent: Record<"ar" | "en", ContentTranslation> = {
         {
           question: "كيف يمكنني التواصل المباشر مع مكتب الشركة الرئيسي في دمشق؟",
           answer:
-            "يمكنكم زيارة مكتبنا في دمشق - شارع الحمراء (بالقرب من فندق بلـو تاور)، أو الاتصال المباشر على الهاتف +963 9666 42574 أو البريد الإلكتروني الرسمي SA.LOGISTICS.SY@GMAIL.COM.",
+            "يمكنكم زيارة مكتبنا في دمشق - شارع الحمراء (بالقرب من فندق بلـو تاور)، أو الاتصال المباشر على الهاتف +963 9666 42574 أو عبر البريد الإلكتروني info@sa-logistics.net أو sales@sa-logistics.net.",
         },
       ],
     },
@@ -496,7 +497,8 @@ export const siteContent: Record<"ar" | "en", ContentTranslation> = {
       whatsappBtn: "محادثة سريعة عبر الواتساب",
       officialAddress: "دمشق - شارع الحمراء - بالقرب من فندق بلـو تاور",
       officialPhone: "+963 9666 42574",
-      officialEmail: "SA.LOGISTICS.SY@GMAIL.COM",
+      officialEmail: "info@sa-logistics.net",
+      salesEmail: "sales@sa-logistics.net",
     },
     footer: {
       description:
@@ -791,7 +793,7 @@ export const siteContent: Record<"ar" | "en", ContentTranslation> = {
         {
           question: "How can I contact your main office in Damascus?",
           answer:
-            "You can visit our main office at Al-Hamra St, Near Blue Tower Hotel, Damascus, Syria. Or call us directly at +963 9666 42574 or email SA.LOGISTICS.SY@GMAIL.COM.",
+            "You can visit our main office at Al-Hamra St, Near Blue Tower Hotel, Damascus, Syria. Or call us directly at +963 9666 42574 or email info@sa-logistics.net or sales@sa-logistics.net.",
         },
       ],
     },
@@ -810,7 +812,8 @@ export const siteContent: Record<"ar" | "en", ContentTranslation> = {
       whatsappBtn: "Chat on WhatsApp Now",
       officialAddress: "Al-Hamra St, Near Blue Tower Hotel, Damascus, Syria",
       officialPhone: "+963 9666 42574",
-      officialEmail: "SA.LOGISTICS.SY@GMAIL.COM",
+      officialEmail: "info@sa-logistics.net",
+      salesEmail: "sales@sa-logistics.net",
     },
     footer: {
       description:

@@ -159,36 +159,51 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
                   <Container className="w-4.5 h-4.5 text-sky-300" />
                 </div>
 
-                <div className="flex items-center justify-between gap-2 relative my-5">
-                  {/* Origin */}
-                  <div className="text-center z-10">
-                    <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
-                      <Globe2 className="w-5 h-5 text-sky-300" />
+                {/* Container query: the card is only ~220px wide on a phone, and
+                    also in the 1024-1280px desktop column, so the route runs
+                    horizontally only once there is room for the animated pill. */}
+                <div className="@container my-5">
+                  <div className="flex flex-col @md:flex-row items-center justify-between gap-2 relative">
+                    {/* Origin */}
+                    <div className="text-center z-10">
+                      <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
+                        <Globe2 className="w-5 h-5 text-sky-300" />
+                      </div>
+                      <div className="text-xs font-bold text-white">{content.hero.routeCard.originHub}</div>
+                      <div className="text-[10px] text-slate-300">{content.hero.routeCard.saHubsLabel}</div>
                     </div>
-                    <div className="text-xs font-bold text-white">{content.hero.routeCard.originHub}</div>
-                    <div className="text-[10px] text-slate-300">{content.hero.routeCard.saHubsLabel}</div>
-                  </div>
 
-                  {/* Route Line Animation with moving plane */}
-                  <div className="flex-1 relative flex items-center justify-center">
-                    <div className="w-full h-0.5 border-t-2 border-dashed border-amber-400/80" />
-                    <motion.div
-                      animate={{ x: isRtl ? [-45, 45] : [45, -45] }}
-                      transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute px-3 py-1 bg-amber-400 text-[#0f2a4a] font-black text-[11px] rounded-full shadow-lg flex items-center gap-1"
-                    >
-                      <Plane className="w-3.5 h-3.5 transform rotate-90" />
-                      <span>{content.hero.routeCard.transitStatus}</span>
-                    </motion.div>
-                  </div>
-
-                  {/* Destination */}
-                  <div className="text-center z-10">
-                    <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
-                      <MapPinned className="w-5 h-5 text-amber-400" />
+                    {/* Narrow: static pill on a short vertical route */}
+                    <div className="@md:hidden flex flex-col items-center gap-1.5 py-1">
+                      <div className="h-3 border-l-2 border-dashed border-amber-400/80" />
+                      <div className="px-3 py-1 bg-amber-400 text-[#0f2a4a] font-black text-[11px] rounded-full shadow-lg flex items-center gap-1">
+                        <Plane className="w-3.5 h-3.5 transform rotate-90" />
+                        <span>{content.hero.routeCard.transitStatus}</span>
+                      </div>
+                      <div className="h-3 border-l-2 border-dashed border-amber-400/80" />
                     </div>
-                    <div className="text-xs font-bold text-white">{content.hero.routeCard.destHub}</div>
-                    <div className="text-[10px] text-slate-300">{content.hero.routeCard.finalDeliveryLabel}</div>
+
+                    {/* Wide: route line with the moving plane */}
+                    <div className="hidden @md:flex flex-1 relative items-center justify-center">
+                      <div className="w-full h-0.5 border-t-2 border-dashed border-amber-400/80" />
+                      <motion.div
+                        animate={{ x: isRtl ? [-45, 45] : [45, -45] }}
+                        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute px-3 py-1 bg-amber-400 text-[#0f2a4a] font-black text-[11px] rounded-full shadow-lg flex items-center gap-1"
+                      >
+                        <Plane className="w-3.5 h-3.5 transform rotate-90" />
+                        <span>{content.hero.routeCard.transitStatus}</span>
+                      </motion.div>
+                    </div>
+
+                    {/* Destination */}
+                    <div className="text-center z-10">
+                      <div className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mx-auto mb-1 text-base shadow-md">
+                        <MapPinned className="w-5 h-5 text-amber-400" />
+                      </div>
+                      <div className="text-xs font-bold text-white">{content.hero.routeCard.destHub}</div>
+                      <div className="text-[10px] text-slate-300">{content.hero.routeCard.finalDeliveryLabel}</div>
+                    </div>
                   </div>
                 </div>
 

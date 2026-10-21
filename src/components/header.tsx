@@ -18,7 +18,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
   onOpenQuoteModal: (serviceName?: string) => void;
-  onOpenFaq: () => void;
 }
 
 interface NavLink {
@@ -28,8 +27,8 @@ interface NavLink {
   onClick?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) => {
-  const { content, lang, toggleLang, isRtl } = useLanguage();
+export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
+  const { content, lang, altHref, isRtl } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -48,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
     { href: "#services", label: content.header.nav.services },
     { href: "#process", label: content.header.nav.process },
     { href: "#whyus", label: content.header.nav.whyUs },
-    { href: "#faq", label: content.header.nav.faq, onClick: onOpenFaq },
+    { href: "#faq", label: content.header.nav.faq },
     { href: "#contact", label: content.header.nav.contact },
   ];
 
@@ -92,17 +91,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
           : "bg-white/95 backdrop-blur-sm border-b border-slate-200 py-4"
           }`}
       >
-        <div className="layout-container flex items-center justify-between">
-          {/* Logo Brand */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0f2a4a] to-[#0a192f] p-2.5 flex items-center justify-center shadow-lg shadow-blue-950/20 group-hover:scale-105 transition-transform">
+        <div className="layout-container flex items-center justify-between gap-2">
+          {/* Logo Brand: min-w-0 lets it give way to the controls on a phone */}
+          <a href="#home" className="flex min-w-0 items-center gap-2.5 sm:gap-3 group">
+            <div className="relative w-12 h-12 flex-shrink-0 rounded-2xl bg-gradient-to-br from-[#0f2a4a] to-[#0a192f] p-2.5 flex items-center justify-center shadow-lg shadow-blue-950/20 group-hover:scale-105 transition-transform">
               <Ship className="w-6 h-6 text-amber-400" />
               {/* Plane lifted straight out of the logo animation */}
               <BrandPlane className="absolute top-0.5 right-0.5 w-10 text-sky-100" />
             </div>
-            <div className="flex flex-col">
+            <div className="flex min-w-0 flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="text-2xl font-black tracking-tight text-[#0f2a4a] font-sans">
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0f2a4a] font-sans">
                   S.A.<span className="text-[#c5a059]">LOGISTICS</span>
                 </span>
               </div>
@@ -140,14 +139,15 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
           {/* Right Action Buttons */}
           <div className="hidden xl:flex items-center gap-3">
             {/* Language Switcher */}
-            <button
-              onClick={toggleLang}
+            <a
+              href={altHref}
+              hrefLang={lang === "ar" ? "en" : "ar"}
               className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-xl border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-400 transition-all shadow-sm"
               title="Switch Language / تغيير اللغة"
             >
               <Globe className="w-4 h-4 text-[#0f2a4a]" />
               <span>{content.header.languageName}</span>
-            </button>
+            </a>
 
             <button onClick={() => onOpenQuoteModal()} className="gold-button px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap">
               <span>{content.header.quoteBtn}</span>
@@ -156,20 +156,23 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal, onOpenFaq }) =
           </div>
 
           {/* Mobile & Tablet Controls */}
-          <div className="flex xl:hidden items-center gap-2">
+          <div className="flex xl:hidden flex-shrink-0 items-center gap-1.5 sm:gap-2">
+            {/* Too wide to sit beside the logo on a phone; the menu drawer and
+                the hero carry the same call to action there. */}
             <button
               onClick={() => onOpenQuoteModal()}
-              className="gold-button px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 whitespace-nowrap"
+              className="gold-button hidden min-[480px]:flex px-3 py-1.5 rounded-xl text-xs items-center gap-1.5 whitespace-nowrap"
             >
               <span>{content.header.quoteBtn}</span>
               {isRtl ? <ArrowLeft className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
             </button>
-            <button
-              onClick={toggleLang}
+            <a
+              href={altHref}
+              hrefLang={lang === "ar" ? "en" : "ar"}
               className="px-2.5 py-1.5 text-xs font-bold text-slate-700 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100"
             >
               {lang === "ar" ? "EN" : "عربي"}
-            </button>
+            </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 border border-slate-200 focus:outline-none"
